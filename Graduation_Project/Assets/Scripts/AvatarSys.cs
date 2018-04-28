@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class AvatarSys : MonoBehaviour {
     //private GameObject girlSource;//ziyuan 
+    public static AvatarSys _instance;
+    public static AvatarSys getInstance()
+    {
+        if (_instance == null) _instance = new AvatarSys();
+        return _instance;
+    }
     private GameObject girlTarget;//huanzhuangmubiao
     private Transform girlSourceTransform;
     private Dictionary<string, Dictionary<string, SkinnedMeshRenderer>>
@@ -31,18 +37,63 @@ public class AvatarSys : MonoBehaviour {
                                                 { "pants","1"},
                                                 { "shoes","1"},
                                                 {"face","1" } };
+
+    public int nowCount = 0;
+    public string getClothConfig(string part)
+    {
+        for (int i = 0;i<6;i++)
+        {
+            if (part == boystr[i,0])
+            {
+                if (nowCount == 1)
+                    return boystr[i, 1];
+                return girlstr[i, 1];
+            }
+        }
+        return null;
+    }
+    public string getClothConfig(int i)
+    {
+         if (nowCount == 1)
+                return boystr[i, 1];
+                return girlstr[i, 1];
+          
+    }
+    private void Awake()
+    {
+        _instance = this;
+        DontDestroyOnLoad(this);//不删除游戏物体
+    }
     // Use this for initialization
     void Start () {
-        //initGirl(); 
+        
+        getDateFromConfig();
+        initGirl(); 
         initBoy();
+        girlTarget.AddComponent<SpingWithMouse>();
+        boyTarget.AddComponent<SpingWithMouse>();
+        boyTarget.SetActive(false);
 	}
-    void initGirl()
+    private void getDateFromConfig()
+    {
+        if (DateManager.GetInstance().ClothConfig["Sex"] == "0")
+        {//girl
+            for (int i = 0; i < 6; i++)
+                girlstr[i, 1] = DateManager.GetInstance().ClothConfig[girlstr[i, 0]];
+        }
+        else
+        {
+            for (int i = 0; i < 6; i++)
+                girlstr[i, 1] = DateManager.GetInstance().ClothConfig[girlstr[i, 0]];
+        }
+    }
+    public void initGirl()
     {
         instaniateGirlAvatar();
         saveDate(girlSourceTransform,girlData,girlTarget,girlSmr);
         initAvatar();
     }
-    void initBoy()
+    public void initBoy()
     {
         instaniateBoyAvatar();
         saveDate(boySourceTransform, boyData, boyTarget, boySmr);
@@ -69,6 +120,17 @@ public class AvatarSys : MonoBehaviour {
         //InstantiateTarget();
     }
 
+    public void clearBoy()
+    {
+        boyTarget.SetActive(false);
+        girlTarget.SetActive(true);
+    }
+    
+    public void clearGirl()
+    {
+        girlTarget.SetActive(false);
+        boyTarget.SetActive(true);
+    }
     void saveDate(Transform sourceTransform,
                   Dictionary<string, Dictionary<string, SkinnedMeshRenderer>> data,
                   GameObject target,
@@ -78,6 +140,8 @@ public class AvatarSys : MonoBehaviour {
         {
             return;
         }
+        data.Clear();
+        smr.Clear();
         SkinnedMeshRenderer[] parts = sourceTransform.GetComponentsInChildren<SkinnedMeshRenderer>();
         foreach (var part in parts)
         {
@@ -120,6 +184,10 @@ public class AvatarSys : MonoBehaviour {
         smr[part].bones = bones.ToArray();
         smr[part].material = skm.material;
         smr[part].sharedMesh = skm.sharedMesh;
+        if (nowCount ==0)
+            SaveData(part, num, girlstr);
+        else
+            SaveData(part, num, boystr);
     }
         
     void initAvatar()
@@ -139,6 +207,7 @@ public class AvatarSys : MonoBehaviour {
         {
             changeMesh(boystr[i, 0], boystr[i, 1], boyData, boyHips, boySmr);
         }
+        
     }
     // Update is called once per frame
     void Update () {
@@ -147,4 +216,28 @@ public class AvatarSys : MonoBehaviour {
           //  changeMesh("top",Random.Range(1,7).ToString(), girlData, girlHips, girlSmr);
         //}
 	}
+    public void onChagePeople(string part, string num)
+    {
+        if (nowCount == 0)
+        {
+            changeMesh(part, num, girlData, girlHips, girlSmr);
+        }
+        else
+        {
+            changeMesh(part, num, boyData, boyHips, boySmr);
+        }
+    }
+    
+    public void SaveData(string part,string num, string[,] str)
+    {
+        int length = str.GetLength(0);
+        for (int i=0;i<length;i++)
+        {
+            if (str[i,0] == part)
+            {
+                str[i, 1] = num;
+            }
+        }
+    }
+
 }

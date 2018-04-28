@@ -78,12 +78,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Resources\Prefeb\UItest.cs" />
+    <Compile Include="Assets\Scripts\AvatarButton.cs" />
     <Compile Include="Assets\Scripts\AvatarSys.cs" />
+    <Compile Include="Assets\Scripts\DateManager.cs" />
+    <Compile Include="Assets\Scripts\LoadAvatar.cs" />
+    <Compile Include="Assets\Scripts\Manager.cs" />
+    <Compile Include="Assets\Scripts\SexMoudle.cs" />
+    <Compile Include="Assets\Scripts\SpingWithMouse.cs" />
+    <Compile Include="Assets\Scripts\UIManage.cs" />
     <Compile Include="Assets\Sources\Character\Env\Glow\GlowEffect.cs" />
     <Compile Include="Assets\Sources\Character\Env\Glow\ImageEffects.cs" />
     <Compile Include="Assets\Sources\Character\Env\MirrorReflection\MirrorReflection.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Configs\config.xml" />
     <None Include="Assets\Sources\Character\Env\Glow\GlowEffectDownsample.shader" />
     <None Include="Assets\Sources\Character\Env\MirrorReflection\MirrorReflection.shader" />
   </ItemGroup>
