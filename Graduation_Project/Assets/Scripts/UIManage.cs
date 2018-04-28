@@ -15,7 +15,7 @@ public class UIManage : MonoBehaviour {
     {
         _instance = this;
         prefab1 = Resources.Load("Prefeb/UITrogleModel") as GameObject;
-        prefab1.transform.parent = this.transform;
+        //Wprefab1.transform.parent = this.transform;
         Vector3 TempPos = new Vector3(0f, -0f, -5f);
         Vector3 TempRot = new Vector3(0f, 1f, 0f);
         Instantiate(prefab1,TempPos,Quaternion.AngleAxis(0,TempRot));

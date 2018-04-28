@@ -87,12 +87,16 @@
     <Compile Include="Assets\Scripts\SexMoudle.cs" />
     <Compile Include="Assets\Scripts\SpingWithMouse.cs" />
     <Compile Include="Assets\Scripts\UIManage.cs" />
+    <Compile Include="Assets\Shader\Reflection.cs" />
     <Compile Include="Assets\Sources\Character\Env\Glow\GlowEffect.cs" />
     <Compile Include="Assets\Sources\Character\Env\Glow\ImageEffects.cs" />
     <Compile Include="Assets\Sources\Character\Env\MirrorReflection\MirrorReflection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Configs\config.xml" />
+    <None Include="Assets\Shader\M.shader" />
+    <None Include="Assets\Shader\Mirror.shader" />
+    <None Include="Assets\Shader\MirrorForScene2.shader" />
     <None Include="Assets\Sources\Character\Env\Glow\GlowEffectDownsample.shader" />
     <None Include="Assets\Sources\Character\Env\MirrorReflection\MirrorReflection.shader" />
   </ItemGroup>
